@@ -1,6 +1,7 @@
-use maze::maze_generator;
-use maze::maze_generator::cell_edge::CellEdge;
-use maze::maze_generator::direction::Direction;
+use maze_lib::maze_generator;
+use maze_lib::maze_generator::cell_edge::CellEdge;
+use maze_lib::maze_generator::coordinates::Coordinates;
+use maze_lib::maze_generator::direction::Direction;
 
 fn main() {
     static WALL_CHAR: &'static str = "▏";
@@ -10,25 +11,30 @@ fn main() {
     let maze = maze_generator::generate(20, 10);
     println!("{:?}x{:?}", maze.columns(), maze.rows());
 
-    println!("{}", (" ".to_owned() + FLOOR_CHAR).repeat((maze.columns()) as usize));
+    println!(
+        "{}",
+        (" ".to_owned() + FLOOR_CHAR).repeat((maze.columns()) as usize)
+    );
 
-    for cell in maze {
-        if let Some(cell) = cell {
-            if let Some(west_edge) = cell.get_edge(&Direction::West) {
-                match west_edge {
-                    CellEdge::Wall | CellEdge::Border => print!("{}", WALL_CHAR),
-                    _ => print!("{}", PASSAGE_CHAR)
+    for row in (0..maze.rows() as i32).rev() {
+        for column in (0..maze.columns() as i32).rev() {
+            if let Some(cell) = maze.get_cell(&Coordinates::new(column, row)) {
+                if let Some(edge) = cell.get_edge(&Direction::East) {
+                    match edge {
+                        CellEdge::Wall | CellEdge::Border => print!("{}", WALL_CHAR),
+                        _ => print!("{}", PASSAGE_CHAR),
+                    }
                 }
-            }
-            if let Some(south_edge) = cell.get_edge(&Direction::South) {
-                match south_edge {
-                    CellEdge::Wall | CellEdge::Border => print!("{}", FLOOR_CHAR),
-                    _ => print!("{}", PASSAGE_CHAR)
+                if let Some(edge) = cell.get_edge(&Direction::South) {
+                    match edge {
+                        CellEdge::Wall | CellEdge::Border => print!("{}", FLOOR_CHAR),
+                        _ => print!("{}", PASSAGE_CHAR),
+                    }
                 }
-            }
-            if let Some(east_edge) = cell.get_edge(&Direction::East) {
-                if east_edge == CellEdge::Border {
-                    println!("{}", WALL_CHAR);
+                if let Some(edge) = cell.get_edge(&Direction::West) {
+                    if edge == CellEdge::Border {
+                        println!("{}", WALL_CHAR);
+                    }
                 }
             }
         }

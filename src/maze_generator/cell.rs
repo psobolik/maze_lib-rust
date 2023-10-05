@@ -1,6 +1,6 @@
-use rand::Rng;
-use crate::maze_generator::coordinates::Coordinates;
 use super::{cell_edge::CellEdge, direction::Direction};
+use crate::maze_generator::coordinates::Coordinates;
+use rand::Rng;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Cell {
@@ -71,8 +71,8 @@ impl Cell {
         let index = rng.gen_range(0..unassigned_directions.len());
         unassigned_directions[index]
     }
-
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -86,7 +86,7 @@ mod tests {
                 Direction::North,
                 Direction::East,
                 Direction::South,
-                Direction::West
+                Direction::West,
             ]
         )
     }

@@ -32,8 +32,7 @@ impl CellGrid {
 
     fn get_index(&self, coordinates: &Coordinates) -> usize {
         if self.in_bounds(coordinates) {
-            let row = coordinates.row() - self.rows() as i32 + 1;
-            (row.abs() * (self.columns as i32) + coordinates.column()) as usize
+            (coordinates.row() * (self.columns as i32) + coordinates.column()) as usize
         } else {
             panic!("Coordinates ({coordinates:?} out of bounds");
         }
@@ -55,12 +54,12 @@ impl CellGrid {
     }
 }
 
-impl IntoIterator for CellGrid {
+impl IntoIterator for &CellGrid {
     type Item = Option<Cell>;
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
     fn into_iter(self) -> Self::IntoIter {
-        self.cells.into_iter()
+        self.cells.clone().into_iter()
     }
 }
 
@@ -112,7 +111,7 @@ mod tests {
         let rows = 20;
         let columns = 40;
         let cell_grid = CellGrid::new(columns, rows);
-        let coordinates = Coordinates::new( columns as i32, rows as i32 - 2);
+        let coordinates = Coordinates::new(columns as i32, rows as i32 - 2);
         assert!(!cell_grid.in_bounds(&coordinates));
     }
 

@@ -8,7 +8,7 @@ use crate::maze_generator::direction::Direction;
 
 pub mod cell;
 pub mod cell_edge;
-mod cell_grid;
+pub mod cell_grid;
 pub mod coordinates;
 pub mod direction;
 
@@ -25,9 +25,7 @@ struct MazeGenerator {
 impl MazeGenerator {
     pub fn new(columns: u32, rows: u32) -> MazeGenerator {
         let cell_grid = CellGrid::new(columns, rows);
-        MazeGenerator {
-            cell_grid,
-        }
+        MazeGenerator { cell_grid }
     }
 
     pub fn populate(&mut self) {
@@ -54,7 +52,8 @@ impl MazeGenerator {
                         }
                         None => {
                             // The neighbor hasn't been visited, so create cell there with a passage
-                            let mut neighbor_cell = self.add_new_cell(visit_stack, neighbor_coordinates);
+                            let mut neighbor_cell =
+                                self.add_new_cell(visit_stack, neighbor_coordinates);
                             self.create_passage(&mut current_cell, &mut neighbor_cell, &direction);
                         }
                     }
@@ -73,29 +72,48 @@ impl MazeGenerator {
         let coordinates = Coordinates::new(column as i32, row as i32);
         self.add_new_cell(visit_stack, coordinates);
     }
-    
-    fn add_new_cell(&mut self, visit_stack: &mut Vec<Coordinates>, coordinates: Coordinates) -> Cell {
+
+    fn add_new_cell(
+        &mut self,
+        visit_stack: &mut Vec<Coordinates>,
+        coordinates: Coordinates,
+    ) -> Cell {
         let new_cell = Cell::new(coordinates);
         self.cell_grid.set_cell(new_cell);
         visit_stack.push(coordinates);
         new_cell
     }
 
-    fn create_passage(&mut self, target_cell: &mut Cell, neighbor_cell: &mut Cell, direction: &Direction) {
+    fn create_passage(
+        &mut self,
+        target_cell: &mut Cell,
+        neighbor_cell: &mut Cell,
+        direction: &Direction,
+    ) {
         self.create_edge(target_cell, neighbor_cell, &direction, CellEdge::Passage);
     }
 
-    fn create_wall(&mut self, target_cell: &mut Cell, neighbor_cell: &mut Cell, direction: &Direction) {
+    fn create_wall(
+        &mut self,
+        target_cell: &mut Cell,
+        neighbor_cell: &mut Cell,
+        direction: &Direction,
+    ) {
         self.create_edge(target_cell, neighbor_cell, &direction, CellEdge::Wall);
     }
 
-    fn create_edge(&mut self, target_cell: &mut Cell, neighbor_cell: &mut Cell, direction: &Direction, cell_edge: CellEdge) {
+    fn create_edge(
+        &mut self,
+        target_cell: &mut Cell,
+        neighbor_cell: &mut Cell,
+        direction: &Direction,
+        cell_edge: CellEdge,
+    ) {
         target_cell.set_edge(direction, Some(cell_edge));
         self.cell_grid.set_cell(target_cell.clone());
         neighbor_cell.set_edge(&direction.opposite(), Some(cell_edge));
         self.cell_grid.set_cell(neighbor_cell.clone());
     }
-
 
     fn create_border(&mut self, cell: &mut Cell, direction: &Direction) {
         cell.set_edge(direction, Some(CellEdge::Border));

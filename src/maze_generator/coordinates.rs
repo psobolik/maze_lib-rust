@@ -5,7 +5,7 @@ pub struct Coordinates {
 }
 
 impl Coordinates {
-    pub const UP: Coordinates = Coordinates { column: 0, row: 1};
+    pub const UP: Coordinates = Coordinates { column: 0, row: 1 };
     pub const RIGHT: Coordinates = Coordinates { column: 1, row: 0 };
     pub const DOWN: Coordinates = Coordinates { column: 0, row: -1 };
     pub const LEFT: Coordinates = Coordinates { column: -1, row: 0 };
@@ -40,7 +40,7 @@ mod tests {
     fn adding_up_moves_up() {
         let before = Coordinates::new(2, 2);
         let after = before + Coordinates::UP;
-        let expected = Coordinates::new(2, 3 );
+        let expected = Coordinates::new(2, 3);
         assert_eq!(after, expected)
     }
 
