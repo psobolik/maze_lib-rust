@@ -1,6 +1,7 @@
 use crate::maze_generator::cell::Cell;
 use crate::maze_generator::coordinates::Coordinates;
 
+/// Represents a maze as a two-dimensional vector of Cells.
 #[derive(Debug)]
 pub struct CellGrid {
     columns: u32,
@@ -8,7 +9,9 @@ pub struct CellGrid {
     cells: Vec<Option<Cell>>,
 }
 
+/// Associated functions to create and use a CellGrid struct.
 impl CellGrid {
+    /// Creates a new, unpopulated CellGrid struct with the given dimensions.
     pub fn new(columns: u32, rows: u32) -> CellGrid {
         let cells = (0..columns * rows).map(|_i| None).collect();
         CellGrid {
@@ -18,18 +21,18 @@ impl CellGrid {
         }
     }
 
+    /// Returns the number of columns in the CellGrid struct.
     pub fn columns(&self) -> u32 {
         self.columns
     }
 
+    /// Returns the number of rows in the CellGrid struct.
     pub fn rows(&self) -> u32 {
         self.rows
     }
 
-    pub fn cells(&self) -> *const Option<Cell> {
-        self.cells.as_ptr()
-    }
-
+    /// Returns the given maze coordinates translated into an index into the CellGrid struct.
+    /// (private)
     fn get_index(&self, coordinates: &Coordinates) -> usize {
         if self.in_bounds(coordinates) {
             (coordinates.row() * (self.columns as i32) + coordinates.column()) as usize
@@ -38,16 +41,19 @@ impl CellGrid {
         }
     }
 
+    /// Returns the value of the CellGrid struct's cell at the given coordinates.
     pub fn get_cell(&self, coordinates: &Coordinates) -> Option<Cell> {
         let index = self.get_index(coordinates);
         self.cells[index]
     }
 
+    /// Sets the value of the CellGrid struct's cell at the given coordinates.
     pub fn set_cell(&mut self, cell: Cell) {
         let index = self.get_index(&cell.coordinates());
         self.cells[index] = Some(cell);
     }
 
+    /// Returns true if the given coordinates represent a location within the CellGrid struct's bounds.
     pub fn in_bounds(&self, coordinates: &Coordinates) -> bool {
         (0..self.rows).contains(&(coordinates.row() as u32))
             && (0..self.columns).contains(&(coordinates.column() as u32))

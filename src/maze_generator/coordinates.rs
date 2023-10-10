@@ -1,21 +1,36 @@
+/// Represents a location in a maze as column and row.
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Coordinates {
     column: i32,
     row: i32,
 }
 
+/// Associated functions to create and use a Coordinates struct.
 impl Coordinates {
+    /// Coordinates struct that can be added to another coordinate to get the
+    /// coordinates above it.
     pub const UP: Coordinates = Coordinates { column: 0, row: 1 };
+    /// Coordinates struct that can be added to another coordinate to get the
+    /// coordinates to the right of it.
     pub const RIGHT: Coordinates = Coordinates { column: 1, row: 0 };
+    /// Coordinates struct that can be added to another coordinate to get the
+    /// coordinates below it.
     pub const DOWN: Coordinates = Coordinates { column: 0, row: -1 };
+    /// Coordinates struct that can be added to another coordinate to get the
+    /// coordinates to the left of it.
     pub const LEFT: Coordinates = Coordinates { column: -1, row: 0 };
 
+    /// Creates a new Coordinates struct with the given column and row.
     pub fn new(column: i32, row: i32) -> Coordinates {
         Coordinates { column, row }
     }
+
+    /// Returns the Coordinates struct's row.
     pub fn row(&self) -> i32 {
         self.row
     }
+
+    /// Returns the Coordinates struct's column.
     pub fn column(&self) -> i32 {
         self.column
     }

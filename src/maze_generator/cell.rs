@@ -2,6 +2,7 @@ use super::{cell_edge::CellEdge, direction::Direction};
 use crate::maze_generator::coordinates::Coordinates;
 use rand::Rng;
 
+/// Represents a cell in a maze, with coordinates and edges.
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Cell {
     coordinates: Coordinates,
@@ -11,7 +12,9 @@ pub struct Cell {
     west_edge: Option<CellEdge>,
 }
 
+/// Associated functions to create and use a Cell struct.
 impl Cell {
+    /// Creates a new Cell with the given coordinates. The new cell has no assigned edges.
     pub fn new(coordinates: Coordinates) -> Cell {
         Cell {
             coordinates,
@@ -22,10 +25,12 @@ impl Cell {
         }
     }
 
+    /// Returns true if all of the Cell's edges have been assigned.
     pub fn is_fully_assigned(&self) -> bool {
         self.unassigned_directions() == vec![]
     }
 
+    /// Returns a vector containing the Cell's unassigned edges.
     pub fn unassigned_directions(&self) -> Vec<Direction> {
         let mut vec = Vec::new();
         if self.north_edge.is_none() {
@@ -43,10 +48,12 @@ impl Cell {
         vec
     }
 
+    /// Returns the Cell's coordinates.
     pub fn coordinates(self) -> Coordinates {
         self.coordinates
     }
 
+    /// Returns the value of the Cell's edge in the given direction.
     pub fn get_edge(&self, direction: &Direction) -> Option<CellEdge> {
         match direction {
             Direction::North => self.north_edge,
@@ -56,6 +63,7 @@ impl Cell {
         }
     }
 
+    /// Sets the Cell's edge in the given direction to the given value.
     pub fn set_edge(&mut self, direction: &Direction, cell_edge: Option<CellEdge>) {
         match direction {
             Direction::North => self.north_edge = cell_edge,
@@ -65,6 +73,7 @@ impl Cell {
         }
     }
 
+    /// Returns the direction of one of the Cell's unassigned edges.
     pub fn random_unassigned_direction(&self) -> Direction {
         let unassigned_directions = self.unassigned_directions();
         let mut rng = rand::thread_rng();

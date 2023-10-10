@@ -1,5 +1,6 @@
 use crate::maze_generator::coordinates::Coordinates;
 
+/// Represents directions in a maze.
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Direction {
     North,
@@ -8,7 +9,9 @@ pub enum Direction {
     West,
 }
 
+/// Associated functions to create and use a Direction enum.
 impl Direction {
+    /// Returns the Direction's opposite.
     pub fn opposite(&self) -> Direction {
         match self {
             Direction::North => Direction::South,
@@ -18,6 +21,8 @@ impl Direction {
         }
     }
 
+    /// Returns the Direction as coordinates that could be added to another
+    /// Coordinates struct to get the coordinates in the direction. (_What?_)
     pub fn coordinates(&self) -> Coordinates {
         match self {
             Direction::North => Coordinates::UP,

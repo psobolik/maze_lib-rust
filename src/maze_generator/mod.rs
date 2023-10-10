@@ -12,6 +12,8 @@ pub mod cell_grid;
 pub mod coordinates;
 pub mod direction;
 
+/// Returns a [CellGrid] of a given size, fully populated with fully assigned [Cell]s and
+/// representing a solvable maze.
 pub fn generate(columns: u32, rows: u32) -> CellGrid {
     let mut maze_generator = MazeGenerator::new(columns, rows);
     maze_generator.populate();
