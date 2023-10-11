@@ -1,5 +1,5 @@
 use super::{cell_edge::CellEdge, direction::Direction};
-use crate::maze_generator::coordinates::Coordinates;
+use crate::maze::coordinates::Coordinates;
 use rand::Rng;
 
 /// Represents a cell in a maze, with coordinates and edges.
@@ -54,7 +54,7 @@ impl Cell {
     }
 
     /// Returns the value of the Cell's edge in the given direction.
-    pub fn get_edge(&self, direction: &Direction) -> Option<CellEdge> {
+    pub fn edge(&self, direction: &Direction) -> Option<CellEdge> {
         match direction {
             Direction::North => self.north_edge,
             Direction::East => self.east_edge,
@@ -187,7 +187,7 @@ mod tests {
         let edge = Some(CellEdge::Passage);
         let direction = Direction::North;
         cell.set_edge(&direction, edge);
-        assert_eq!(cell.get_edge(&direction), edge);
+        assert_eq!(cell.edge(&direction), edge);
     }
 
     #[test]
@@ -196,7 +196,7 @@ mod tests {
         let edge = Some(CellEdge::Passage);
         let direction = Direction::East;
         cell.set_edge(&direction, edge);
-        assert_eq!(cell.get_edge(&direction), edge);
+        assert_eq!(cell.edge(&direction), edge);
     }
 
     #[test]
@@ -205,7 +205,7 @@ mod tests {
         let edge = Some(CellEdge::Passage);
         let direction = Direction::South;
         cell.set_edge(&direction, edge);
-        assert_eq!(cell.get_edge(&direction), edge);
+        assert_eq!(cell.edge(&direction), edge);
     }
 
     #[test]
@@ -214,6 +214,6 @@ mod tests {
         let edge = Some(CellEdge::Passage);
         let direction = Direction::West;
         cell.set_edge(&direction, edge);
-        assert_eq!(cell.get_edge(&direction), edge);
+        assert_eq!(cell.edge(&direction), edge);
     }
 }

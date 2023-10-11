@@ -1,4 +1,4 @@
-use crate::maze_generator::coordinates::Coordinates;
+use crate::maze::coordinates::Coordinates;
 
 /// Represents directions in a maze.
 #[derive(Copy, Clone, Debug, PartialEq)]
