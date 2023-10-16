@@ -3,9 +3,9 @@ use maze_lib::maze::cell_edge::CellEdge;
 use maze_lib::maze::coordinates::Coordinates;
 use maze_lib::maze::direction::Direction;
 fn main() {
-    static WALL_CHAR: &'static str = "▏";
-    static FLOOR_CHAR: &'static str = "_";
-    static PASSAGE_CHAR: &'static str = " ";
+    static WALL_CHAR: &str = "▏";
+    static FLOOR_CHAR: &str = "_";
+    static PASSAGE_CHAR: &str = " ";
 
     let maze = maze_generator::generate(20, 10);
     println!("{:?}x{:?}", maze.columns(), maze.rows());

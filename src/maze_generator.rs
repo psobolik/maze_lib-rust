@@ -34,7 +34,7 @@ impl MazeGenerator {
 
     fn process_active_cell(&mut self, visit_stack: &mut Vec<Coordinates>) {
         if let Some(cell_coordinates) = visit_stack.last() {
-            if let Some(mut current_cell) = self.maze.cell(&cell_coordinates) {
+            if let Some(mut current_cell) = self.maze.cell(cell_coordinates) {
                 if current_cell.is_fully_assigned() {
                     visit_stack.pop();
                     return;
@@ -86,7 +86,7 @@ impl MazeGenerator {
         neighbor_cell: &mut Cell,
         direction: &Direction,
     ) {
-        self.create_edge(target_cell, neighbor_cell, &direction, CellEdge::Passage);
+        self.create_edge(target_cell, neighbor_cell, direction, CellEdge::Passage);
     }
 
     fn create_wall(
@@ -95,7 +95,7 @@ impl MazeGenerator {
         neighbor_cell: &mut Cell,
         direction: &Direction,
     ) {
-        self.create_edge(target_cell, neighbor_cell, &direction, CellEdge::Wall);
+        self.create_edge(target_cell, neighbor_cell, direction, CellEdge::Wall);
     }
 
     fn create_edge(
@@ -106,13 +106,13 @@ impl MazeGenerator {
         cell_edge: CellEdge,
     ) {
         target_cell.set_edge(direction, Some(cell_edge));
-        self.maze.set_cell(target_cell.clone());
+        self.maze.set_cell(*target_cell);
         neighbor_cell.set_edge(&direction.opposite(), Some(cell_edge));
-        self.maze.set_cell(neighbor_cell.clone());
+        self.maze.set_cell(*neighbor_cell);
     }
 
     fn create_border(&mut self, cell: &mut Cell, direction: &Direction) {
         cell.set_edge(direction, Some(CellEdge::Border));
-        self.maze.set_cell(cell.clone());
+        self.maze.set_cell(*cell);
     }
 }
