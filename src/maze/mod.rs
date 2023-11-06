@@ -2,8 +2,8 @@ use crate::maze::cell::Cell;
 use crate::maze::coordinates::Coordinates;
 
 pub mod cell;
-pub mod coordinates;
 pub mod cell_edge;
+pub mod coordinates;
 pub mod direction;
 
 /// Represents a maze as a two-dimensional vector of Cells.

@@ -36,6 +36,12 @@ impl Coordinates {
     }
 }
 
+impl std::ops::AddAssign<Coordinates> for Coordinates {
+    fn add_assign(&mut self, rhs: Self) {
+        *self = *self + rhs
+    }
+}
+
 impl std::ops::Add<Coordinates> for Coordinates {
     type Output = Coordinates;
 
@@ -81,6 +87,38 @@ mod tests {
         let after = before + Coordinates::LEFT;
         let expected = Coordinates::new(1, 2);
         assert_eq!(after, expected)
+    }
+
+    #[test]
+    fn add_assigning_up_moves_up() {
+        let mut coordinates = Coordinates::new(2, 2);
+        let expected = Coordinates::new(2, 3);
+        coordinates += Coordinates::UP;
+        assert_eq!(coordinates, expected)
+    }
+
+    #[test]
+    fn add_assigning_right_moves_right() {
+        let mut coordinates = Coordinates::new(2, 2);
+        let expected = Coordinates::new(3, 2);
+        coordinates += Coordinates::RIGHT;
+        assert_eq!(coordinates, expected)
+    }
+
+    #[test]
+    fn add_assigning_down_moves_down() {
+        let mut coordinates = Coordinates::new(2, 2);
+        let expected = Coordinates::new(2, 1);
+        coordinates += Coordinates::DOWN;
+        assert_eq!(coordinates, expected)
+    }
+
+    #[test]
+    fn add_assigning_left_moves_left() {
+        let mut coordinates = Coordinates::new(2, 2);
+        let expected = Coordinates::new(1, 2);
+        coordinates += Coordinates::LEFT;
+        assert_eq!(coordinates, expected)
     }
 
     #[test]

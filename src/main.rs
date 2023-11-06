@@ -1,7 +1,8 @@
-use maze_lib::maze_generator;
 use maze_lib::maze::cell_edge::CellEdge;
 use maze_lib::maze::coordinates::Coordinates;
 use maze_lib::maze::direction::Direction;
+use maze_lib::maze_generator;
+
 fn main() {
     static WALL_CHAR: &str = "▏";
     static FLOOR_CHAR: &str = "_";

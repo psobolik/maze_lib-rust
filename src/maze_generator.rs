@@ -2,9 +2,9 @@ use rand::Rng;
 
 use crate::maze::cell::Cell;
 use crate::maze::cell_edge::CellEdge;
-use crate::maze::Maze;
 use crate::maze::coordinates::Coordinates;
 use crate::maze::direction::Direction;
+use crate::maze::Maze;
 
 /// Returns a [Maze] of a given size, fully populated with fully assigned [Cell]s and
 /// representing a solvable maze.
